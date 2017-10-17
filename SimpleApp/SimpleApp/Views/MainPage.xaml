@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="SimpleApp.Views.MainPage"
+             x:Name="MainPageView"
+             Title="Idea's List">
+    <ContentPage.Padding>
+        <Thickness>20,20,20,20</Thickness>
+    </ContentPage.Padding>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Name="Add" Command="{Binding GoToAddItemCommand}"></ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <StackLayout>
+        <ListView x:Name="listView"
+              ItemsSource="{Binding List}"
+              IsPullToRefreshEnabled="True"
+              RefreshCommand="{Binding LoadListViewCommand}"
+              IsRefreshing="{Binding IsBusy, Mode=OneWay}"
+              HasUnevenRows="True"
+              RowHeight="80">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <ViewCell.ContextActions>
+                            <MenuItem 
+								Text="Delete"
+								IsDestructive="true"
+								Command="{Binding Path=BindingContext.DeleteItemCommand, Source={x:Reference MainPageView}}"
+								CommandParameter="{Binding .}"/>
+                        </ViewCell.ContextActions>
+                        <StackLayout Margin="8">
+                            <Label Text="{Binding Title}" FontAttributes="Bold" />
+                            <Label Text="{Binding Description}" />
+                            <Label Text="{Binding CreatedOn, StringFormat='Created on:{0: yyyy-MM-dd HH:mm:ss}'}" 
+                                   FontAttributes="Bold" FontSize="Small" />
+                            
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+</ContentPage>
