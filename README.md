@@ -1,2 +1,2 @@
 <h1>SimpleApp</h1>
-App using Xamarin.Forms for Android and Iphone
+App using Xamarin.Forms with PRISM template for Android and Iphone Edit
